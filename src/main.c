@@ -17,9 +17,22 @@ int main(int argc, char ** argv) {
 	printToScreen(b);
 
 	res = eliminate(A,b);
+	if( res == 1 ) {	// elminate(A,b) zwraca 1 dla macierzy osobliwej
+		printf( "macierz osobliwa\n" );
+		return 1;
+	}
 	x = createMatrix(b->r, 1);
 	if (x != NULL) {
 		res = backsubst(x,A,b);
+
+		if( res == 1 ) {	// backsubst(x,A,b) zwraca 1, gdy na diagonali pojawi się 0
+			printf( "Zero na diagonali (dzielenie przez zero)\n" );
+			return 1;
+		}
+		if( res == 2 ) {	// backsubst(x,A,b) zwraca 2, gdy rozmiar macierzy jest zły
+			printf( "Zły rozmiar macierzy\n" );
+			return 1;
+		}
 
 		printToScreen(x);
 	  freeMatrix(x);
